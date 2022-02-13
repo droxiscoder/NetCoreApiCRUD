@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using breakroutines.Data.Interfaces;
 using breakroutines.Data.Repositories;
 using breakroutines.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace breakroutines.Data.Repositoryes
 {
@@ -22,24 +24,52 @@ namespace breakroutines.Data.Repositoryes
             return await Process.RunAsync(action);
         }
 
-        public Task<ProcessResult<List<User>>> GetAll()
+        public async Task<ProcessResult<User>> GetSingleByEmail(string email)
         {
-            throw new NotImplementedException();
+            Func<Task<User>> action = async () =>
+            {
+                var user = await context.Users.Where(x => x.Email == email).SingleAsync();
+                return user;
+            };
+
+            return await Process.RunAsync(action);
         }
 
-        public Task<ProcessResult<User>> GetSingleByEmail(string email)
+        public async Task<ProcessResult<User>> GetSingleById(int id)
         {
-            throw new NotImplementedException();
+            Func<Task<User>> action = async () =>
+            {
+                var user = await context.Users.Where(x => x.UserId == id).SingleAsync();
+                return user;
+            };
+
+            return await Process.RunAsync(action);
         }
 
-        public Task<ProcessResult<User>> GetSingleById(int id)
+        public async Task<ProcessResult> Update(User user)
         {
-            throw new NotImplementedException();
-        }
+            Func<Task> action = async () =>
+            {
+                var userResponse = await context.Users.FirstOrDefaultAsync(x => x.UserId == user.UserId);
 
-        public Task<ProcessResult> Update(User user)
-        {
-            throw new NotImplementedException();
+                if (userResponse != null)
+                {
+                    userResponse.FirstName = user.FirstName;
+                    userResponse.LastName = user.LastName;
+                    userResponse.PhoneNumber = user.PhoneNumber;
+                    userResponse.ProfilePic = user.ProfilePic;
+                    userResponse.IsActive = user.IsActive;
+                    userResponse.Address = user.Address;
+                    userResponse.Address = user.Address;
+                    userResponse.City = user.City;
+                    userResponse.State = user.State;
+
+                    await context.SaveChangesAsync();
+                }
+            };
+
+            return await Process.RunAsync(action);
+            
         }
     }
 }
