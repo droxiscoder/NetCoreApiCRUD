@@ -23,7 +23,7 @@ namespace breakroutines.Models
         public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {           
+        {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -32,9 +32,9 @@ namespace breakroutines.Models
             {
                 entity.ToTable("reviews");
 
-                entity.HasIndex(e => e.UserId, "reviews_fk_1_idx");
+                entity.HasIndex(e => e.TripId, "review_fk_2_idx");
 
-                entity.HasIndex(e => e.TripId, "reviews_fk_2_idx");
+                entity.HasIndex(e => e.UserId, "reviews_fk_1_idx");
 
                 entity.Property(e => e.ReviewId).HasColumnName("review_id");
 
@@ -55,13 +55,13 @@ namespace breakroutines.Models
                     .WithMany(p => p.Reviews)
                     .HasForeignKey(d => d.TripId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("reviews_fk_2");
+                    .HasConstraintName("review_fk_2");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Reviews)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("reviews_fk_1");
+                    .HasConstraintName("review_fk_1");
             });
 
             modelBuilder.Entity<Trip>(entity =>
@@ -80,9 +80,7 @@ namespace breakroutines.Models
                     .HasColumnType("varchar(10000)")
                     .HasColumnName("description");
 
-                entity.Property(e => e.Duration)
-                    .HasColumnType("decimal(2,2)")
-                    .HasColumnName("duration");
+                entity.Property(e => e.Duration).HasColumnName("duration");
 
                 entity.Property(e => e.Latitude)
                     .HasColumnType("decimal(9,6)")
@@ -98,7 +96,7 @@ namespace breakroutines.Models
                     .HasColumnName("name");
 
                 entity.Property(e => e.Price)
-                    .HasColumnType("decimal(19,4)")
+                    .HasColumnType("decimal(19,2)")
                     .HasColumnName("price");
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");

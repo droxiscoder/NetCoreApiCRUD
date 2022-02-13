@@ -16,7 +16,7 @@ namespace breakroutines.Models
         public long TripId { get; set; }
         public int UserId { get; set; }
         public string Name { get; set; }
-        public decimal Duration { get; set; }
+        public TimeSpan Duration { get; set; }
         public decimal Price { get; set; }
         public string Description { get; set; }
         public decimal? Latitude { get; set; }

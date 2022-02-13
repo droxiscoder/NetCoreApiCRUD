@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using breakroutines.Data.Interfaces;
 using breakroutines.Data.Repositories;
 using breakroutines.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace breakroutines.Data.Repositoryes
 {
@@ -11,29 +13,50 @@ namespace breakroutines.Data.Repositoryes
     {
         public TripPhotoRepository(breakroutinesContext context) : base(context) { }
 
-        public Task<ProcessResult> Add(TripPhoto tripPhoto)
+        public async Task<ProcessResult> Add(TripPhoto tripPhoto)
         {
-            throw new NotImplementedException();
+            Func<Task> action = async () =>
+            {
+                await context.TripPhotos.AddAsync(tripPhoto);
+                await context.SaveChangesAsync();
+            };
+
+            return await Process.RunAsync(action);
         }
 
-        public Task<ProcessResult> Delete(TripPhoto tripPhoto)
+        public async Task<ProcessResult> Delete(long id)
         {
-            throw new NotImplementedException();
+            Func<Task> action = async () =>
+            {
+                var tripPhoto = await context.TripPhotos.Where(x => x.TripPhotoId == id).SingleAsync();
+                context.Remove(tripPhoto);
+                await context.SaveChangesAsync();
+            };
+
+            return await Process.RunAsync(action);
         }
 
-        public Task<ProcessResult<List<TripPhoto>>> GetAllByTripId(int id)
+        public async Task<ProcessResult<List<TripPhoto>>> GetAllByTripId(long id)
         {
-            throw new NotImplementedException();
+            Func<Task<List<TripPhoto>>> action = async () =>
+            {
+                var tripPhotos = await context.TripPhotos.Where(x => x.TripId == id).ToListAsync();
+                return tripPhotos;
+            };
+
+            return await Process.RunAsync(action);
         }
 
-        public Task<ProcessResult<TripPhoto>> GetSingle(int id)
+        public async Task<ProcessResult<TripPhoto>> GetSingle(long id)
         {
-            throw new NotImplementedException();
+            Func<Task<TripPhoto>> action = async () =>
+            {
+                var tripPhoto = await context.TripPhotos.Where(x => x.TripPhotoId == id).SingleAsync();
+                return tripPhoto;
+            };
+
+            return await Process.RunAsync(action);
         }
 
-        public Task<ProcessResult> Update(TripPhoto tripPhoto)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
