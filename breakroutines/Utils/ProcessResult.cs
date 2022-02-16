@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace breakroutines.Models
+namespace breakroutines.Utils
 {
     public class ProcessResult
     {

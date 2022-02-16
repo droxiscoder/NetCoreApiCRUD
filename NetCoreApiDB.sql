@@ -98,6 +98,7 @@ CREATE TABLE IF NOT EXISTS `breakroutines`.`trip_photos` (
   `user_id` INT NOT NULL,
   `trip_id` BIGINT NOT NULL,
   `photo` VARCHAR(250) NOT NULL,
+  `is_default` BIT(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`trip_photo_id`),
   INDEX `trip_photos_fk_2_idx` (`user_id` ASC) VISIBLE,
   INDEX `trip_photos_fk_1_idx` (`trip_id` ASC) VISIBLE,

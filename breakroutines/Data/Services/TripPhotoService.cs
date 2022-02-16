@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using breakroutines.Data.Interfaces;
 using breakroutines.Data.Repositories;
 using breakroutines.Models;
+using breakroutines.Utils;
 using Microsoft.EntityFrameworkCore;
 
 namespace breakroutines.Data.Repositoryes
 {
-    public class TripPhotoRepository : BaseService, ITripPhotoRepository
+    public class TripPhotoService : BaseService, ITripPhotoService
     {
-        public TripPhotoRepository(breakroutinesContext context) : base(context) { }
+        public TripPhotoService(breakroutinesContext context) : base(context) { }
 
         public async Task<ProcessResult> Add(TripPhoto tripPhoto)
         {

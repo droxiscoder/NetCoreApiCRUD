@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using breakroutines.Data.Interfaces;
 using breakroutines.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -11,27 +10,27 @@ namespace breakroutines.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class ReviewController : ControllerBase
     {
 
-        private readonly IUserService _userRepository;
+        private readonly IReviewService _reviewRepository;
         private readonly ILogger<UserController> _logger;
 
-        public UserController(IUserService userRepository,
+        public ReviewController(IReviewService reviewRepository,
                                 ILogger<UserController> logger)
             : base()
         {
-            this._userRepository = userRepository;
+            this._reviewRepository = reviewRepository;
             this._logger = logger;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] User user)
+        public async Task<IActionResult> Add([FromBody] Review review)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _userRepository.Add(user);
+            var result = await _reviewRepository.Add(review);
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
 
@@ -39,13 +38,13 @@ namespace breakroutines.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(User), 200)]
-        public async Task<IActionResult> GetById(int id)
+        [ProducesResponseType(typeof(List<Review>), 200)]
+        public async Task<IActionResult> GetSingle(long id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _userRepository.GetSingleById(id);
+            var result = await _reviewRepository.GetSingle(id);
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
 
@@ -53,13 +52,13 @@ namespace breakroutines.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(User), 200)]
-        public async Task<IActionResult> GetByEmail(string email)
+        [ProducesResponseType(typeof(List<Review>), 200)]
+        public async Task<IActionResult> GetAllByTripId(long id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _userRepository.GetSingleByEmail(email);
+            var result = await _reviewRepository.GetAllByTripId(id);
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
 
@@ -67,12 +66,12 @@ namespace breakroutines.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] User user)
+        public async Task<IActionResult> Delete([FromBody] long id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _userRepository.Update(user);
+            var result = await _reviewRepository.Delete(id);
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
 
@@ -80,3 +79,5 @@ namespace breakroutines.Controllers
         }
     }
 }
+
+

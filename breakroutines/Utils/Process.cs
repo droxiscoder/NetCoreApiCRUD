@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using breakroutines.Models;
 
-namespace breakroutines.Models
+namespace breakroutines.Utils
 {
     public static class Process
     {

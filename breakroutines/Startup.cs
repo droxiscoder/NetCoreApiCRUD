@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using breakroutines.Data.Interfaces;
 using breakroutines.Data.Repositoryes;
@@ -32,7 +33,14 @@ namespace breakroutines
         {
             services.AddDbContext<breakroutinesContext>(options => options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
-            services.AddTransient<IUserRepository, UserRepository>();
+
+            services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ITripService, TripService>();
+            services.AddTransient<IReviewService, ReviewService>();
+            services.AddTransient<ITripPhotoService, TripPhotoService>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "breakroutines", Version = "v1" });

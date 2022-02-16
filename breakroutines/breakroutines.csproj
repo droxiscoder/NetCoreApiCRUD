@@ -12,6 +12,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="MySql.EntityFrameworkCore" Version="5.0.10" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,11 +24,14 @@
     <None Remove="Data\" />
     <None Remove="Data\Abstract\" />
     <None Remove="Data\Repositoryes\" />
+    <None Remove="Utils\" />
+    <None Remove="Newtonsoft.Json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Data\" />
     <Folder Include="Data\Interfaces\" />
-    <Folder Include="Data\Repositories\" />
+    <Folder Include="Data\Services\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
 </Project>

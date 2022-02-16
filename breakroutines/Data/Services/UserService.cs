@@ -6,12 +6,13 @@ using breakroutines.Data.Interfaces;
 using breakroutines.Data.Repositories;
 using breakroutines.Models;
 using Microsoft.EntityFrameworkCore;
+using breakroutines.Utils;
 
 namespace breakroutines.Data.Repositoryes
 {
-    public class UserRepository : BaseService, IUserRepository
+    public class UserService : BaseService, IUserService
     {
-        public UserRepository(breakroutinesContext context) : base(context) { }
+        public UserService(breakroutinesContext context) : base(context) { }
 
         public async Task<ProcessResult> Add(User user)
         {

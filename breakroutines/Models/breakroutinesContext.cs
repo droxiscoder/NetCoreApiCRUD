@@ -123,6 +123,12 @@ namespace breakroutines.Models
                     .HasMaxLength(250)
                     .HasColumnName("photo");
 
+                entity.Property(e => e.IsDefault)
+                   .IsRequired()
+                   .HasColumnType("bit(1)")
+                   .HasColumnName("is_default")
+                   .HasDefaultValueSql("b'0'");
+
                 entity.Property(e => e.TripId).HasColumnName("trip_id");
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");

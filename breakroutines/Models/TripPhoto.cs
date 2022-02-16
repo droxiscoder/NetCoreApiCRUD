@@ -11,6 +11,7 @@ namespace breakroutines.Models
         public int UserId { get; set; }
         public long TripId { get; set; }
         public string Photo { get; set; }
+        public bool IsDefault { get; set; }
 
         public virtual Trip Trip { get; set; }
         public virtual User User { get; set; }

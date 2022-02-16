@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using breakroutines.Models;
+using breakroutines.Utils;
 
 namespace breakroutines.Data.Interfaces
 {
-    public interface IUserRepository
+    public interface IUserService
     {
         Task<ProcessResult<User>> GetSingleByEmail(string email);
         Task<ProcessResult<User>> GetSingleById(int id);
